@@ -1,4 +1,5 @@
 #include <windows.h>
+
 const DWORD LOAD_STRING_FROM_LANGUAGE_FUNCTION_ADDRESS = 0x00444BA0;
 
 const char *LoadStringFromLanguageTxt(int stringId) {
