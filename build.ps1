@@ -1,6 +1,6 @@
 #!/usr/bin/env pwsh
 
-Write-Host "Building Gunbound Thors Hammers plugin..." -ForegroundColor Green
+Write-Host "Building Gunbound World Champion plugin..." -ForegroundColor Green
 
 if (!(Test-Path "build")) {
     New-Item -ItemType Directory -Path "build" | Out-Null
