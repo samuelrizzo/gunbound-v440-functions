@@ -39,7 +39,7 @@ DWORD WINAPI FunctionDemonstration(LPVOID lpParam) {
             Sleep(4000);
             ShowGameMessage(5, 5, "Leaving room...");
             Sleep(4000);
-            SendPacket(&leave[0]);
+            SendPacket(&leave[0], 8); // always packet len +4
         }
         Sleep(50);
     }

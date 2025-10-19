@@ -20,21 +20,21 @@
  * @brief Sends a raw packet to the client.
  *
  * Copies the buffer pointed to by packetData to the memory region expected by the client and
- * adjusts the packet size before invoking the internal send function. The packet size is
- * automatically calculated as sizeof(packetData) + 4. Implemented in `SendPacket.cpp` using inline ASM.
+ * adjusts the packet size before invoking the internal send function. Implemented in `SendPacket.cpp` using inline ASM.
  *
  * Implementation details:
  * - Uses PACKET_BUFFER_BASE_ADDRESS (0x00870558) to get the packet buffer base address
  * - Copies payload data to [base + 0x9C]
- * - Writes packet length (WORD) at [base + 0x4098] (calculated as sizeof(packetData) + 4)
+ * - Writes packet length (WORD) at [base + 0x4098] using the provided packetLen parameter
  * - Calls XP compatibility function at 0x0052A420
  * - Invokes native send routine at SEND_PACKET_FUNCTION_ADDRESS (0x00445CD0)
  *
  * Contract:
  * - packetData must not be null
- * - Packet size is automatically calculated as sizeof(packetData) + 4
+ * - packetLen must specify the exact length of the packet data in bytes
  * - Call site must run in the correct client context compatible with the offsets
  *
  * @param packetData Pointer to the packet data to send.
+ * @param packetLen Length of the packet data in bytes.
  */
-void SendPacket(BYTE *packetData);
+void SendPacket(BYTE *packetData, WORD packetLen);
