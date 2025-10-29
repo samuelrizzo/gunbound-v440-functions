@@ -1,22 +1,14 @@
-#include <windows.h>
+#include "GetMasterSlot.h"
+
+typedef unsigned int(__fastcall *GetMasterSlotFunc)(void *gameState);
 
 DWORD __stdcall GetMasterSlot() {
-    const DWORD GAME_STATE_BASE_ADDRESS = 0x00873040;
+    const DWORD GAME_STATE_BASE_ADDRESS = 0x008701cc;
     const DWORD GET_MASTER_SLOT_FUNCTION_ADDRESS = 0x0042BFD0;
-    DWORD result;
+    const DWORD GAME_STATE_OFFSET = 0x0001A640;
 
-    __asm {
-        pushad
-        xor eax, eax
-        mov ebx, 0x00000002
-        mov edi, [GAME_STATE_BASE_ADDRESS]
-        mov esi, 0x00000009
-        xor edx, edx
-        lea ecx, [edi + 0x0001A640]
-        call [GET_MASTER_SLOT_FUNCTION_ADDRESS]
-        mov result, eax
-        popad
-    }
+    DWORD baseAddress = *reinterpret_cast<DWORD *>(GAME_STATE_BASE_ADDRESS);
+    void *gameStatePtr = reinterpret_cast<void *>(baseAddress + GAME_STATE_OFFSET);
 
-    return result;
+    return reinterpret_cast<GetMasterSlotFunc>(GET_MASTER_SLOT_FUNCTION_ADDRESS)(gameStatePtr);
 }
