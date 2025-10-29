@@ -1,15 +1,15 @@
 /**
  * @file ShowGameMessage.h
- * @brief Declaration of the game message display routine for the Gunbound client.
+ * @brief Declaration of the ASM-based game message display routine for the Gunbound client.
  *
  * This header exposes the ShowGameMessage function, which displays a message in the game
- * with specified color and icon. The implementation uses function pointers and absolute
+ * with specified color and icon. The implementation uses x86 inline assembly and absolute
  * addresses tied to a specific client version, so version changes may invalidate the
  * hardcoded offsets.
  *
  * Dependencies: requires Windows headers for basic types.
  *
- * @date 2025-10-15
+ * @date 2025-08-26
  */
 
 #pragma once
@@ -19,15 +19,15 @@
 /**
  * @brief Displays a message in the game interface.
  *
- * Invokes the game's internal message display functions with the provided parameters.
+ * Invokes the game's internal message display function with the provided parameters.
  * The message appears in the game's UI with the specified color and icon styling.
- * Uses function pointers to call the native routines at addresses 0x004CF180 and 0x004DCB50.
+ * Implemented in `ShowGameMessage.cpp` using inline ASM.
  *
- * Implementation details:
+ * Assembly implementation details:
  * - Calls native functions at SHOW_GAME_MESSAGE_FUNCTION_ADDRESS_1 (0x004CF180) and
- *   SHOW_GAME_MESSAGE_FUNCTION_ADDRESS_2 (0x004DCB50)
- * - Parameters passed as (message, color, icon)
- * - Uses __stdcall calling convention (callee cleans up the stack)
+ * SHOW_GAME_MESSAGE_FUNCTION_ADDRESS_2 (0x004DCB50)
+ * - Parameters pushed in reverse order (message, color, icon)
+ * - Uses standard calling convention
  * - Calls both functions sequentially for complete message display
  *
  * Contract:
@@ -35,8 +35,8 @@
  * - color and icon values should be valid for the game's display system
  * - Call site must run in the correct client context compatible with the address
  *
- * @param icon Icon code to show alongside the message.
- * @param color Color code for the message display.
  * @param message Pointer to the null-terminated message string to display.
+ * @param color Color code for the message display.
+ * @param icon Icon code to show alongside the message.
  */
 void ShowGameMessage(int icon, int color, const char *message);
