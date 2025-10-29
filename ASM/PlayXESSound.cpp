@@ -1,14 +1,9 @@
-#include <windows.h>
+#include "PlayXESSound.h"
 
-DWORD PLAY_XES_SOUND_FUNCTION_ADDRESS = 0x00529cb0;
+typedef unsigned int(__cdecl *PlayXESSoundFunc)(const char *soundName, int loopFlag);
 
 void PlayXESSound(const char *soundName) {
-    _asm {
-        pushad
-        push 0x00 // if 0x01 it will play in loop
-        push soundName
-        call dword ptr [PLAY_XES_SOUND_FUNCTION_ADDRESS]
-        add esp, 8
-        popad
-    }
+    const DWORD PLAY_XES_SOUND_FUNCTION_ADDRESS = 0x00529cb0;
+
+    reinterpret_cast<PlayXESSoundFunc>(PLAY_XES_SOUND_FUNCTION_ADDRESS)(soundName, 0);
 }
