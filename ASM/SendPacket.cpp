@@ -7,10 +7,10 @@ void SendPacket(BYTE *packetData, WORD packetLen) {
     const DWORD PACKET_BUFFER_BASE_ADDRESS = 0x00870558;
     const DWORD SEND_PACKET_FUNCTION_ADDRESS = 0x00445CD0;
 
-    memcpy((void *)((*(DWORD *)PACKET_BUFFER_BASE_ADDRESS) + 0x9C), packetData, packetLen);
-    *(WORD *)((*(DWORD *)PACKET_BUFFER_BASE_ADDRESS) + 0x4098) = packetLen;
+    DWORD baseAddress = *reinterpret_cast<DWORD *>(PACKET_BUFFER_BASE_ADDRESS);
 
-    DWORD baseAddress = *(DWORD *)PACKET_BUFFER_BASE_ADDRESS;
-    SendPacketFunc sendPacketFunc = (SendPacketFunc)SEND_PACKET_FUNCTION_ADDRESS;
-    sendPacketFunc(baseAddress);
+    memcpy(reinterpret_cast<void *>(baseAddress + 0x9C), packetData, packetLen);
+    *reinterpret_cast<WORD *>(baseAddress + 0x4098) = packetLen;
+
+    reinterpret_cast<SendPacketFunc>(SEND_PACKET_FUNCTION_ADDRESS)(baseAddress);
 }

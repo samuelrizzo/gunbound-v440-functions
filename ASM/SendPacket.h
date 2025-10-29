@@ -21,15 +21,13 @@
  *
  * Copies the buffer pointed to by packetData to the memory region expected by the client and
  * adjusts the packet size before invoking the internal send function. The function calls the
- * native send routine at address 0x00445CD0 using a function pointer with __stdcall calling
- * convention.
+ * native send routine at address 0x00445CD0 using a function pointer.
  *
  * Implementation details:
  * - Uses PACKET_BUFFER_BASE_ADDRESS (0x00870558) to get the packet buffer base address
  * - Copies payload data to [base + 0x9C]
  * - Writes packet length (WORD) at [base + 0x4098] using the provided packetLen parameter
  * - Invokes native send routine at SEND_PACKET_FUNCTION_ADDRESS (0x00445CD0) via function pointer
- * - Uses __stdcall calling convention (callee cleans up the stack)
  *
  * Contract:
  * - packetData must not be null
