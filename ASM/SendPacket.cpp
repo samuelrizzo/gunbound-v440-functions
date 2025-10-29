@@ -1,4 +1,7 @@
 #include "SendPacket.h"
+#include <cstring>
+
+typedef void(__stdcall *SendPacketFunc)(DWORD baseAddress);
 
 void SendPacket(BYTE *packetData, WORD packetLen) {
     const DWORD PACKET_BUFFER_BASE_ADDRESS = 0x00870558;
@@ -6,19 +9,8 @@ void SendPacket(BYTE *packetData, WORD packetLen) {
 
     memcpy((void *)((*(DWORD *)PACKET_BUFFER_BASE_ADDRESS) + 0x9C), packetData, packetLen);
     *(WORD *)((*(DWORD *)PACKET_BUFFER_BASE_ADDRESS) + 0x4098) = packetLen;
-    __asm {
-		pushad
-		mov esi, [PACKET_BUFFER_BASE_ADDRESS]
-		mov esi, [esi]
-		lea ecx, [esi + 0x80BC]
-		popad
 
-		mov ecx, [PACKET_BUFFER_BASE_ADDRESS]
-		mov ecx, [ecx]
-		mov [ebp-4], ecx
-		mov ecx, [SEND_PACKET_FUNCTION_ADDRESS]
-		mov [ebp-8], ecx
-		push [ebp-4]
-		call dword ptr [ebp-8]
-    }
+    DWORD baseAddress = *(DWORD *)PACKET_BUFFER_BASE_ADDRESS;
+    SendPacketFunc sendPacketFunc = (SendPacketFunc)SEND_PACKET_FUNCTION_ADDRESS;
+    sendPacketFunc(baseAddress);
 }
