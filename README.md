@@ -81,6 +81,6 @@ Output: `build/Release/plugin.dll`
 
 ## Acknowledgments
 
-**Gabriel Castro** for contributing and encouraging reverse engineering research on Gunbound, and for initiating the publication of ASM functions for the v440 version
-
 **Luiz Felipe (Kyll3r)** for always publishing open source GunBound content and encouraging the community to do the same
+
+**Finn** for research involving reverse engineering of GunBound
