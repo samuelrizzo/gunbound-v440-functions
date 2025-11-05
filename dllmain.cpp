@@ -1,4 +1,5 @@
 #include "ASM/GetMasterSlot.h"
+#include "ASM/GunbaMessageBox.h"
 #include "ASM/LoadStringFromLanguage.h"
 #include "ASM/PlayXESSound.h"
 #include "ASM/SendPacket.h"
@@ -37,6 +38,7 @@ DWORD WINAPI FunctionDemonstration(LPVOID lpParam) {
 
             PlayXESSound("gold.xes");
             Sleep(4000);
+            GunbaMessageBox("Leaving room...", 0);
             ShowGameMessage(5, 5, "Leaving room...");
             Sleep(4000);
             SendPacket(&leave[0], 8); // always packet len +4
