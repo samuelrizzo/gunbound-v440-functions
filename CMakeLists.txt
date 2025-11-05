@@ -15,6 +15,7 @@ set(SOURCES
     ASM/GetMasterSlot.cpp
     ASM/LoadStringFromLanguage.cpp
     ASM/PlayXESSound.cpp
+    ASM/GunbaMessageBox.cpp
     Helpers/ReadSlotNickname.cpp
 )
 
@@ -24,6 +25,7 @@ set(HEADERS
     ASM/GetMasterSlot.h
     ASM/LoadStringFromLanguage.h
     ASM/PlayXESSound.h
+    ASM/GunbaMessageBox.h
     Helpers/ReadSlotNickname.h
 )
 
