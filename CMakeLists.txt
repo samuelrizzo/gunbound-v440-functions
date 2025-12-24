@@ -12,6 +12,7 @@ set(SOURCES
     dllmain.cpp
     ASM/SendPacket.cpp
     ASM/ShowGameMessage.cpp
+    ASM/SetKeyboardDirection.cpp
     ASM/GetMasterSlot.cpp
     ASM/LoadStringFromLanguage.cpp
     ASM/PlayXESSound.cpp
@@ -22,6 +23,7 @@ set(SOURCES
 set(HEADERS
     ASM/SendPacket.h
     ASM/ShowGameMessage.h
+    ASM/SetKeyboardDirection.h
     ASM/GetMasterSlot.h
     ASM/LoadStringFromLanguage.h
     ASM/PlayXESSound.h
